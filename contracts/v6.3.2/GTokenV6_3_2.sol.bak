@@ -1,19 +1,24 @@
 // SPDX-License-Identifier: MIT
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/math/MathUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-
 import "../interfaces/IGToken.sol";
 import "../interfaces/IGnsToken.sol";
 import "../interfaces/INft.sol";
 import "../interfaces/IOpenTradesPnlFeed.sol";
 
-import "../libraries/ChainUtils.sol";
+import "../libraries/SafeERC20Upgradeable.sol";
 
-pragma solidity 0.8.17;
+import "../libraries/ChainUtils.sol";
+import "../libraries/MathUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "../libraries/IERC20Upgradeable.sol";
+
+
+
+pragma solidity 0.8.20;
 
 contract GTokenV6_3_2 is ERC20Upgradeable, ERC4626Upgradeable, OwnableUpgradeable, IGToken {
+
     using MathUpgradeable for uint;
 
     // Contracts & Addresses (constant)

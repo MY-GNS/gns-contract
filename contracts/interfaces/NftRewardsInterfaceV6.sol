@@ -1,3 +1,5 @@
+pragma solidity 0.8.20;
+import '../interfaces/StorageInterfaceV5.sol';
 interface NftRewardsInterfaceV6{
     struct TriggeredLimitId{ address trader; uint pairIndex; uint index; StorageInterfaceV5.LimitOrder order; }
     enum OpenLimitOrderType{ LEGACY, REVERSAL, MOMENTUM }

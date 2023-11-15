@@ -1,4 +1,4 @@
-pragma solidity 0.8.7;
+pragma solidity 0.8.20;
 interface AggregatorInterfaceV5{
     enum OrderType { MARKET_OPEN, MARKET_CLOSE, LIMIT_OPEN, LIMIT_CLOSE }
     function getPrice(uint,OrderType,uint) external returns(uint);

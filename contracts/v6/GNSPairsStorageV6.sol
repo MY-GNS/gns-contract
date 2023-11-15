@@ -24,9 +24,7 @@ import "contracts/interfaces/StorageInterfaceV5.sol";
 
 import "contracts/interfaces/AggregatorInterfaceV6.sol";
 import "contracts/interfaces/NftRewardsInterfaceV6.sol";
-
-
-pragma solidity 0.8.11;
+pragma solidity 0.8.20;
 
 contract GNSPairsStorageV6 {
 

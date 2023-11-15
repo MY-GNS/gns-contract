@@ -6,11 +6,11 @@ import '../interfaces/IGToken.sol';
 import '../interfaces/IOwnable.sol';
 import '../interfaces/IOpenTradesPnlFeed.sol';
 
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
     using Chainlink for Chainlink.Request;
-    
+
     // Constants
     uint public immutable LINK_FEE_BALANCE_DIVIDER;
     uint constant MIN_ANSWERS = 3;
@@ -20,7 +20,7 @@ contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
     uint constant MAX_REQUESTS_EVERY = 1 days;
     uint constant MIN_REQUESTS_COUNT = 3;
     uint constant MAX_REQUESTS_COUNT = 10;
-    
+
     // Params
     IGToken public immutable gToken;
 
@@ -110,9 +110,9 @@ contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
             && _minAnswers >= MIN_ANSWERS
             && _minAnswers % 2 == 1
             && _minAnswers <= _oracles.length / 2, "WRONG_PARAMS");
-        
+
         LINK_FEE_BALANCE_DIVIDER = _LINK_FEE_BALANCE_DIVIDER;
-        
+
         setChainlinkToken(_linkToken);
 
         gToken = _gToken;
@@ -237,7 +237,7 @@ contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
             && block.timestamp - nextEpochValuesLastRequest >= requestsEvery){
             if(nextEpochValuesRequestCount < requestsCount){
                 makeOpenPnlRequest();
-                
+
             }else if(nextEpochValues.length >= requestsCount){
                 startNewEpoch();
             }
@@ -265,7 +265,7 @@ contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
 
         nextEpochValuesRequestCount++;
         nextEpochValuesLastRequest = block.timestamp;
-        
+
         for(uint i; i < oracles.length; i ++){
             requestIds[sendChainlinkRequestTo(
                 oracles[i],
@@ -362,7 +362,7 @@ contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
     function swap(int[] memory array, uint i, uint j) private pure{
         (array[i], array[j]) = (array[j], array[i]);
     }
-    
+
     function sort(int[] memory array, uint begin, uint end) private pure{
         if (begin >= end) { return; }
 
@@ -379,7 +379,7 @@ contract GTokenOpenPnlFeed is ChainlinkClient, IOpenTradesPnlFeed{
         sort(array, begin, j);
         sort(array, j + 1, end);
     }
-    
+
     function median(int[] memory array) private pure returns(int){
         sort(array, 0, array.length);
 

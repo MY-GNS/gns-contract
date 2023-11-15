@@ -27,7 +27,7 @@ import "contracts/interfaces/NftRewardsInterfaceV6.sol";
 
 // File: contracts\GNSReferralsV6_2.sol
 
-pragma solidity 0.8.15;
+pragma solidity 0.8.20;
 
 contract GNSReferralsV6_2 {
 

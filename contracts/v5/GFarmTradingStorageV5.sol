@@ -1,7 +1,6 @@
 
-
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.7;
+
 // File: contracts\interfaces\TokenInterfaceV5.sol
 import  "contracts/interfaces/TokenInterfaceV5.sol";
 
@@ -23,9 +22,7 @@ import  "contracts/interfaces/PausableInterfaceV5.sol";
 
 
 // File: contracts\GFarmTradingStorageV5.sol
-
-
-pragma solidity 0.8.7;
+pragma solidity 0.8.20;
 
 contract GFarmTradingStorageV5 {
 

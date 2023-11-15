@@ -3,7 +3,7 @@ import '@openzeppelin/contracts/utils/Base64.sol';
 import '@openzeppelin/contracts/utils/Strings.sol';
 import '../interfaces/IGTokenLockedDepositNftDesign.sol';
 
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 contract GTokenLockedDepositNftDesign is IGTokenLockedDepositNftDesign{
     function buildTokenURI(

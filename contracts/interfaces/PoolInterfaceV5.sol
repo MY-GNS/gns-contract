@@ -1,4 +1,4 @@
-pragma solidity 0.8.7;
+pragma solidity 0.8.20;
 
 interface PoolInterfaceV5{
     function increaseAccTokensPerLp(uint) external;

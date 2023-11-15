@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import {StorageInterfaceV5} from "./StorageInterfaceV5.sol";
-
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 interface IGNSOracleRewardsV6_4_1 {
     struct TriggeredLimitId {

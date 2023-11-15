@@ -4,8 +4,7 @@ import "./NftInterfaceV5.sol";
 import "./IGToken.sol";
 import "./PairsStorageInterfaceV6.sol";
 import "./ChainlinkFeedInterfaceV5.sol";
-
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 interface PoolInterfaceV5 {
     function increaseAccTokensPerLp(uint) external;

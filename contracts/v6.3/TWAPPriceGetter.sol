@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
-import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
+import "contracts/libraries/TickMath.sol";
 import "@uniswap/v3-core/contracts/libraries/FixedPoint96.sol";
-import "@uniswap/v3-core/contracts/libraries/FullMath.sol";
+import "contracts/libraries/FullMath.sol";
 
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 abstract contract TWAPPriceGetter {
     // Constants

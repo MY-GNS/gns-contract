@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
-
+pragma solidity 0.8.20;
 library PackingUtils {
     function pack(uint256[] memory values, uint256[] memory bitLengths) external pure returns (uint256 packed) {
         require(values.length == bitLengths.length, "Mismatch in the lengths of values and bitLengths arrays");
