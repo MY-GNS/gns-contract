@@ -1,71 +1,28 @@
-// File: contracts\interfaces\TokenInterfaceV5.sol
+
 
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
+// File: contracts\interfaces\TokenInterfaceV5.sol
+import  "contracts/interfaces/TokenInterfaceV5.sol";
 
-interface TokenInterfaceV5{
-    function burn(address, uint256) external;
-    function mint(address, uint256) external;
-    function transfer(address, uint256) external returns (bool);
-    function transferFrom(address, address, uint256) external returns(bool);
-    function balanceOf(address) external view returns(uint256);
-    function hasRole(bytes32, address) external view returns (bool);
-    function approve(address, uint256) external returns (bool);
-    function allowance(address, address) external view returns (uint256);
-}
 
 // File: contracts\interfaces\AggregatorInterfaceV5.sol
+import "contracts/interfaces/AggregatorInterfaceV5.sol";
 
-pragma solidity 0.8.7;
-
-interface AggregatorInterfaceV5{
-    enum OrderType { MARKET_OPEN, MARKET_CLOSE, LIMIT_OPEN, LIMIT_CLOSE }
-    function getPrice(uint,OrderType,uint) external returns(uint);
-    function tokenPriceDai() external view returns(uint);
-    function pairMinOpenLimitSlippageP(uint) external view returns(uint);
-    function closeFeeP(uint) external view returns(uint);
-    function linkFee(uint,uint) external view returns(uint);
-    function openFeeP(uint) external view returns(uint);
-    function pairMinLeverage(uint) external view returns(uint);
-    function pairMaxLeverage(uint) external view returns(uint);
-    function pairsCount() external view returns(uint);
-    function tokenDaiReservesLp() external view returns(uint, uint);
-    function referralP(uint) external view returns(uint);
-    function nftLimitOrderFeeP(uint) external view returns(uint);
-}
 
 // File: contracts\interfaces\PoolInterfaceV5.sol
 
-pragma solidity 0.8.7;
-
-interface PoolInterfaceV5{
-    function increaseAccTokensPerLp(uint) external;
-}
+import "contracts/interfaces/PoolInterfaceV5.sol";
 
 // File: contracts\interfaces\NftInterfaceV5.sol
+import  "contracts/interfaces/NftInterfaceV5.sol";
 
-pragma solidity 0.8.7;
-
-interface NftInterfaceV5{
-    function balanceOf(address) external view returns (uint);
-    function ownerOf(uint) external view returns (address);
-    function transferFrom(address, address, uint) external;
-    function tokenOfOwnerByIndex(address, uint) external view returns(uint);
-}
 
 // File: contracts\interfaces\PausableInterfaceV5.sol
+import  "contracts/interfaces/PausableInterfaceV5.sol";
 
-pragma solidity 0.8.7;
-
-interface PausableInterfaceV5{
-    function isPaused() external view returns (bool);
-}
 
 // File: contracts\GFarmTradingStorageV5.sol
-
-
-
-
 
 
 pragma solidity 0.8.7;
@@ -359,7 +316,7 @@ contract GFarmTradingStorageV5 {
 
         if(openTradesCount[_trade.trader][_trade.pairIndex] == 1){
             pairTradersId[_trade.trader][_trade.pairIndex] = pairTraders[_trade.pairIndex].length;
-            pairTraders[_trade.pairIndex].push(_trade.trader); 
+            pairTraders[_trade.pairIndex].push(_trade.trader);
         }
 
         _tradeInfo.beingMarketClosed = false;
@@ -380,7 +337,7 @@ contract GFarmTradingStorageV5 {
 
             p[_pairTradersId] = p[p.length-1];
             pairTradersId[p[_pairTradersId]][pairIndex] = _pairTradersId;
-            
+
             delete pairTradersId[trader][pairIndex];
             p.pop();
         }
@@ -398,7 +355,7 @@ contract GFarmTradingStorageV5 {
 
         reqID_pendingMarketOrder[_id] = _order;
         reqID_pendingMarketOrder[_id].block = block.number;
-        
+
         if(_open){
             pendingMarketOpenCount[_order.trade.trader][_order.trade.pairIndex]++;
         }else{
@@ -412,7 +369,7 @@ contract GFarmTradingStorageV5 {
 
         for(uint i = 0; i < orderIds.length; i++){
             if(orderIds[i] == _id){
-                if(_open){ 
+                if(_open){
                     pendingMarketOpenCount[_order.trade.trader][_order.trade.pairIndex]--;
                 }else{
                     pendingMarketCloseCount[_order.trade.trader][_order.trade.pairIndex]--;
@@ -505,18 +462,18 @@ contract GFarmTradingStorageV5 {
     // Manage referrals
     function storeReferral(address _trader, address _referral) external onlyTrading{
         Trader storage trader = traders[_trader];
-        trader.referral = _referral != address(0) && trader.referral == address(0) && _referral != _trader 
+        trader.referral = _referral != address(0) && trader.referral == address(0) && _referral != _trader
                         ? _referral : trader.referral;
     }
-    function increaseReferralRewards(address _referral, uint _amount) external onlyTrading{ 
-        traders[_referral].referralRewardsTotal += _amount; 
+    function increaseReferralRewards(address _referral, uint _amount) external onlyTrading{
+        traders[_referral].referralRewardsTotal += _amount;
     }
 
     // Manage rewards
     function distributeLpRewards(uint _amount) external onlyTrading{ pool.increaseAccTokensPerLp(_amount); }
     function increaseNftRewards(uint _nftId, uint _amount) external onlyTrading{
-        nftLastSuccess[_nftId] = block.number; 
-        nftRewards += _amount; 
+        nftLastSuccess[_nftId] = block.number;
+        nftRewards += _amount;
     }
 
     // Unlock next leverage
@@ -555,19 +512,19 @@ contract GFarmTradingStorageV5 {
     }
 
     // Manage tokens
-    function handleTokens(address _a, uint _amount, bool _mint) external onlyTrading{ 
-        if(_mint){ token.mint(_a, _amount); tokensMinted += _amount; } 
-        else { token.burn(_a, _amount); tokensBurned += _amount; } 
+    function handleTokens(address _a, uint _amount, bool _mint) external onlyTrading{
+        if(_mint){ token.mint(_a, _amount); tokensMinted += _amount; }
+        else { token.burn(_a, _amount); tokensBurned += _amount; }
     }
-    function transferDai(address _from, address _to, uint _amount) external onlyTrading{ 
+    function transferDai(address _from, address _to, uint _amount) external onlyTrading{
         if(_from == address(this)){
-            dai.transfer(_to, _amount); 
+            dai.transfer(_to, _amount);
         }else{
-            dai.transferFrom(_from, _to, _amount); 
+            dai.transferFrom(_from, _to, _amount);
         }
     }
-    function transferLinkToAggregator(address _from, uint _pairIndex, uint _leveragedPosDai) external onlyTrading{ 
-        linkErc677.transferFrom(_from, address(priceAggregator), priceAggregator.linkFee(_pairIndex, _leveragedPosDai)); 
+    function transferLinkToAggregator(address _from, uint _pairIndex, uint _leveragedPosDai) external onlyTrading{
+        linkErc677.transferFrom(_from, address(priceAggregator), priceAggregator.linkFee(_pairIndex, _leveragedPosDai));
     }
 
     // View utils functions
@@ -588,34 +545,34 @@ contract GFarmTradingStorageV5 {
     }
 
     // Additional getters
-    function getReferral(address _trader) external view returns(address){ 
-        return traders[_trader].referral; 
+    function getReferral(address _trader) external view returns(address){
+        return traders[_trader].referral;
     }
-    function getLeverageUnlocked(address _trader) external view returns(uint){ 
-        return traders[_trader].leverageUnlocked; 
+    function getLeverageUnlocked(address _trader) external view returns(uint){
+        return traders[_trader].leverageUnlocked;
     }
-    function pairTradersArray(uint _pairIndex) external view returns(address[] memory){ 
-        return pairTraders[_pairIndex]; 
+    function pairTradersArray(uint _pairIndex) external view returns(address[] memory){
+        return pairTraders[_pairIndex];
     }
-    function getPendingOrderIds(address _trader) external view returns(uint[] memory){ 
-        return pendingOrderIds[_trader]; 
+    function getPendingOrderIds(address _trader) external view returns(uint[] memory){
+        return pendingOrderIds[_trader];
     }
-    function pendingOrderIdsCount(address _trader) external view returns(uint){ 
-        return pendingOrderIds[_trader].length; 
+    function pendingOrderIdsCount(address _trader) external view returns(uint){
+        return pendingOrderIds[_trader].length;
     }
     function getOpenLimitOrder(
-        address _trader, 
+        address _trader,
         uint _pairIndex,
         uint _index
-    ) external view returns(OpenLimitOrder memory){ 
+    ) external view returns(OpenLimitOrder memory){
         require(hasOpenLimitOrder(_trader, _pairIndex, _index));
-        return openLimitOrders[openLimitOrderIds[_trader][_pairIndex][_index]]; 
+        return openLimitOrders[openLimitOrderIds[_trader][_pairIndex][_index]];
     }
-    function getOpenLimitOrders() external view returns(OpenLimitOrder[] memory){ 
-        return openLimitOrders; 
+    function getOpenLimitOrders() external view returns(OpenLimitOrder[] memory){
+        return openLimitOrders;
     }
-    function getSupportedTokens() external view returns(address[] memory){ 
-        return supportedTokens; 
+    function getSupportedTokens() external view returns(address[] memory){
+        return supportedTokens;
     }
     function getSpreadReductionsArray() external view returns(uint[5] memory){
         return spreadReductionsP;
